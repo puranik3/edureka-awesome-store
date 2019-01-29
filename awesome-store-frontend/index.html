@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            /* CSS */
+            body {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            img {
+                width: 32px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Awesome Store</h1>
+        <hr />
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody id="products-table-tbody"></tbody>
+        </table>
+
+        <script>
+            /* JS */
+            fetch( 'http://localhost:3000/products' )
+                .then(function( response ) {
+                    return response.json();
+                })
+                .then(function( products ) {
+                    const html = products.map(function( product ) {
+                        return `<tr>
+                            <td><img src="${product.imageUrl}" /></td>
+                            <td>${product.name}</td>
+                            <td>${product.description}</td>
+                            <td>${product.price}</td>
+                            <td>${product.starRating}</td>
+                        </tr>`
+                    }).join( '' );
+
+                    document.getElementById( 'products-table-tbody' ).innerHTML = html;
+                })
+        </script>
+    </body>
+</html>
